@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ABC Electronics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+        }
+
+        .navbar {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        }
+
+        .navbar h4 {
+            color: white;
+        }
+
+        .card {
+            border-radius: 15px;
+            transition: 0.3s;
+            background: #ffffff;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .product-img {
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .badge {
+            font-size: 12px;
+        }
+
+        .product-card {
+            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        }
+        .product-card img {
+            height: 200px;
+            object-fit: contain;
+        }
+        .slider-img {
+            width: 250px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        button {
+            border-radius: 20px;
+        }
+        #slider {
+            transition: all 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔷 NAVBAR -->
+<div class="navbar d-flex justify-content-between p-3">
+    <h4>🛒 ABC Electronics</h4>
+
+    <div>
+        <button onclick="window.location.href='cart.html'" class="btn btn-light position-relative me-2">
+            Cart 🛒
+            <span id="cart-count"
+                  class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                0
+            </span>
+        </button>
+
+        <div id="auth-section">
+        </div>
+
+    </div>
+</div>
+
+<div class="container mt-4">
+
+    <!-- 🔥 Trending -->
+    <h3>🔥 Trending Mobiles</h3>
+    <div class="text-center my-4">
+        <img id="slider" class="slider-img" src="https://m.media-amazon.com/images/I/71yzJoE7WlL._SX679_.jpg" width="250">
+    </div>
+
+    <input type="text" id="search" onkeyup="searchProducts()" placeholder="Search mobiles...">
+
+<div class="text-center mb-4">
+    <button onclick="filterProducts('all')" class="btn btn-outline-dark m-1">All</button>
+    <button onclick="filterProducts('Apple')" class="btn btn-outline-dark m-1">Apple</button>
+    <button onclick="filterProducts('Samsung')" class="btn btn-outline-dark m-1">Samsung</button>
+    <button onclick="filterProducts('OnePlus')" class="btn btn-outline-dark m-1">OnePlus</button>
+</div>
+
+    <!-- 📱 PRODUCTS -->
+    <h3 class="mt-5">Mobile Devices</h3>
+    <div class="card product-card p-3 text-center"></div>
+    <div class="row" id="product-list"></div>
+
+<!-- 🔥 SCRIPT -->
+<script>
+
+let sliderImages = [
+    "images/iphone15_pro.jpg",
+    "images/samsung_s6_ultra.jpg",
+    "images/Oneplus_13s.jpg"
+];
+
+let index = 0;
+
+function startSlider() {
+    let slider = document.getElementById("slider");
+
+    if (!slider) return; // safety
+
+    slider.src = images[index];
+
+    setInterval(() => {
+        slider.style.opacity = 0;
+
+        setTimeout(() => {
+            index = (index + 1) % images.length;
+            slider.src = images[index];
+            slider.style.opacity = 1;
+        }, 300);
+
+    }, 2500);
+}
+
+function addToCart(name, price, image) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push({
+        name: name,
+        price: price,
+        image: image
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+
+    alert("Added to cart!");
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").innerText = cart.length;
+}
+
+function goToCart() {
+    window.location.href = "cart.html";
+}
+
+function logout() {
+    localStorage.clear();
+    alert("Logged out");
+    window.location.href = "index.html";
+}
+
+function goToLogin() {
+    window.location.href = "login.html";
+}
+
+window.onload = function () {
+    updateCartCount();
+    loadProducts();
+    startSlider();
+};
+
+</script>
+<script>
+console.log("JS loaded");
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
