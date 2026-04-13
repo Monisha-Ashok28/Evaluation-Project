@@ -79,7 +79,7 @@ function updateCartCount() {
     cart.forEach(item => totalQty += item.qty);
 
     if (count) {
-        count.innerText = cart.length;
+        count.innerText = totalQty;
     }
 }
 
@@ -125,7 +125,7 @@ function loadProducts() {
 
     products.forEach(p => {
         list.innerHTML += `
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-4 product-card" data-brand="${p.brand}">
             <div class="card p-3 text-center">
                 <img src="${p.image}" style="height:200px; object-fit:contain;">
                 <h5>${p.name}</h5>
@@ -143,7 +143,7 @@ function filterProducts(brand) {
     items.forEach(p => {
         let b = p.getAttribute("data-brand");
 
-        if (brand === "All" || b === brand) {
+        if (brand.toLowerCase() === "all" || b.toLowerCase() === brand.toLowerCase()){
             p.style.display = "block";
         } else {
             p.style.display = "none";
@@ -284,7 +284,6 @@ function placeOrder() {
     window.location.href = "success.html";
 }
 
-localStorage.setItem("user", "admin");
 
 document.addEventListener("DOMContentLoaded", function () {
     loadProducts();
