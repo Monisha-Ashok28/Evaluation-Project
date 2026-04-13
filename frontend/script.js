@@ -222,6 +222,7 @@ function login() {
 
 // ================== LOAD ==================
 window.onload = function () {
+    loadProducts();
     updateCartCount();
     updateAuthButton();
     startSlider();
