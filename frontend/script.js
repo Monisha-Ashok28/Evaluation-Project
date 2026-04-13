@@ -1,26 +1,26 @@
 // ================== STATIC PRODUCTS =================
 let products = [
-  { id: 1, name: "iPhone 15 Pro", brand: "Apple", price: 79998, image: "images/iphone15_pro.jpg" },
-  { id: 2, name: "iPhone 15", brand: "Apple", price: 69999, image: "images/iphone15.jpg" },
-  { id: 3, name: "iPhone 16", brand: "Apple", price: 67999, image: "images/iphone16.jpg" },
-  { id: 4, name: "iPhone 16 Plus", brand: "Apple", price: 89900, image: "images/iphone16_plus.jpg" },
-  { id: 5, name: "iPhone 17", brand: "Apple", price: 82900, image: "images/iphone17.jpg" },
-  { id: 6, name: "iPhone 17 Pro", brand: "Apple", price: 134900, image: "images/iphone17_pro.jpg" },
-  { id: 7, name: "iPhone 17 Pro Max", brand: "Apple", price: 189900, image: "images/iphone17_pro_max.jpg" },
-  { id: 8, name: "iPhone Air", brand: "Apple", price: 94990, image: "images/iphone_air.jpg" },
-  { id: 9, name: "iPhone 16 Pro Max", brand: "Apple", price: 144990, image: "images/iphone16_pro_max.jpg" },
+  { id: 1, name: "iPhone 15 Pro", brand: "Apple", price: 79998, image: "./images/iphone15_pro.jpg" },
+  { id: 2, name: "iPhone 15", brand: "Apple", price: 69999, image: "./images/iphone15.jpg" },
+  { id: 3, name: "iPhone 16", brand: "Apple", price: 67999, image: "./images/iphone16.jpg" },
+  { id: 4, name: "iPhone 16 Plus", brand: "Apple", price: 89900, image: "./images/iphone16_plus.jpg" },
+  { id: 5, name: "iPhone 17", brand: "Apple", price: 82900, image: "./images/iphone17.jpg" },
+  { id: 6, name: "iPhone 17 Pro", brand: "Apple", price: 134900, image: "./images/iphone17_pro.jpg" },
+  { id: 7, name: "iPhone 17 Pro Max", brand: "Apple", price: 189900, image: "./images/iphone17_pro_max.jpg" },
+  { id: 8, name: "iPhone Air", brand: "Apple", price: 94990, image: "./images/iphone_air.jpg" },
+  { id: 9, name: "iPhone 16 Pro Max", brand: "Apple", price: 144990, image: "./images/iphone16_pro_max.jpg" },
 
-  { id: 10, name: "Samsung S24 FE", brand: "Samsung", price: 40450, image: "images/samsung_s24_fe.jpg" },
-  { id: 11, name: "Samsung S26 Ultra", brand: "Samsung", price: 139999, image: "images/samsung_s26_ultra.jpg" },
-  { id: 12, name: "Samsung S25", brand: "Samsung", price: 74999, image: "images/samsung_s25.jpg" },
-  { id: 13, name: "Samsung S25 Ultra", brand: "Samsung", price: 118999, image: "images/samsung_s25_ultra.jpg" },
-  { id: 14, name: "Samsung S26", brand: "Samsung", price: 87999, image: "images/samsung_s26.jpg" },
-  { id: 15, name: "Samsung Galaxy Z Fold7", brand: "Samsung", price: 186999, image: "images/samsung_fold7.jpg" },
+  { id: 10, name: "Samsung S24 FE", brand: "Samsung", price: 40450, image: "./images/samsung_s24_fe.jpg" },
+  { id: 11, name: "Samsung S26 Ultra", brand: "Samsung", price: 139999, image: "./images/samsung_s26_ultra.jpg" },
+  { id: 12, name: "Samsung S25", brand: "Samsung", price: 74999, image: "./images/samsung_s25.jpg" },
+  { id: 13, name: "Samsung S25 Ultra", brand: "Samsung", price: 118999, image: "./images/samsung_s25_ultra.jpg" },
+  { id: 14, name: "Samsung S26", brand: "Samsung", price: 87999, image: "./images/samsung_s26.jpg" },
+  { id: 15, name: "Samsung Galaxy Z Fold7", brand: "Samsung", price: 186999, image: "./images/samsung_fold7.jpg" },
 
-  { id: 16, name: "OnePlus 13s", brand: "OnePlus", price: 57999, image: "images/oneplus_13s.jpg" },
-  { id: 17, name: "OnePlus 15", brand: "OnePlus", price: 79999, image: "images/oneplus_15.jpg" },
-  { id: 18, name: "OnePlus 15R", brand: "OnePlus", price: 50499, image: "images/oneplus_15r.jpg" },
-  { id: 19, name: "OnePlus Nord 6", brand: "OnePlus", price: 39999, image: "images/oneplus_nord6.jpg" }
+  { id: 16, name: "OnePlus 13s", brand: "OnePlus", price: 57999, image: "./images/oneplus_13s.jpg" },
+  { id: 17, name: "OnePlus 15", brand: "OnePlus", price: 79999, image: "./images/oneplus_15.jpg" },
+  { id: 18, name: "OnePlus 15R", brand: "OnePlus", price: 50499, image: "./images/oneplus_15r.jpg" },
+  { id: 19, name: "OnePlus Nord 6", brand: "OnePlus", price: 39999, image: "./images/oneplus_nord6.jpg" }
 ];
 
 function updateAuthButton() {
@@ -33,6 +33,23 @@ function updateAuthButton() {
         section.innerHTML = `<button onclick="logout()" class="btn btn-danger">Logout</button>`;
     } else {
         section.innerHTML = `<button onclick="goToLogin()" class="btn btn-light">Login</button>`;
+    }
+}
+
+function loadAuth() {
+    const auth = document.getElementById("auth-section");
+    const user = localStorage.getItem("user");
+
+    if (user) {
+        auth.innerHTML = `
+            <button onclick="goToCart()" class="btn btn-light">Cart 🛒 <span id="cart-count">0</span></button>
+            <button onclick="logout()" class="btn btn-danger">Logout</button>
+        `;
+    } else {
+        auth.innerHTML = `
+            <button onclick="goToCart()" class="btn btn-light">Cart 🛒 <span id="cart-count">0</span></button>
+            <button onclick="window.location.href='login.html'" class="btn btn-light">Login</button>
+        `;
     }
 }
 
@@ -177,12 +194,15 @@ function startSlider() {
 }
 
 function logout() {
-    localStorage.removeItem("cart");   
-    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("user");
 
     alert("Logged out successfully");
 
     window.location.href = "index.html";
+}
+
+function goToCart() {
+    window.location.href = "cart.html";
 }
 
 function goToLogin() {
@@ -272,4 +292,11 @@ function placeOrder() {
 
     window.location.href = "success.html";
 }
+
+loadAuth();
+localStorage.setItem("user", "admin");+
+
+
+
+
 
