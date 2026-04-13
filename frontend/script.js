@@ -120,30 +120,22 @@ function loadCart() {
 }
 
 function loadProducts() {
-    let container = document.getElementById("product-list");
-    if (!container) return;
+    const list = document.getElementById("product-list");
+    list.innerHTML = "";
 
-    container.innerHTML = "";
-
-            products.forEach(p => {
-                container.innerHTML += `
-                    <div class="col-md-4 mb-4 product-card" data-brand="${p.brand}">
-                        <div class="card p-3 text-center">
-                            <img src="http://127.0.0.1:8000${p.image}" width="200">
-                            <h5>${p.name}</h5>
-                            <p><b>${p.brand}</b></p>
-                            <p>₹${p.price}</p>
-
-                            <button onclick="addToCart('${p.name}', ${p.price}, 'http://127.0.0.1:8000${p.image}')"
-                                    class="btn btn-success">
-                                Buy Now
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        };
-
+    products.forEach(p => {
+        list.innerHTML += `
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 text-center">
+                <img src="${p.image}" style="height:200px; object-fit:contain;">
+                <h5>${p.name}</h5>
+                <p>${p.brand}</p>
+                <p>₹${p.price}</p>
+                <button onclick="addToCart(${p.id})">Add to Cart</button>
+            </div>
+        </div>`;
+    });
+}
 
 function filterProducts(brand) {
     let items = document.querySelectorAll(".product-card");
@@ -230,7 +222,6 @@ function login() {
 
 // ================== LOAD ==================
 window.onload = function () {
-    loadProducts();
     updateCartCount();
     updateAuthButton();
     startSlider();
@@ -293,10 +284,12 @@ function placeOrder() {
     window.location.href = "success.html";
 }
 
-loadAuth();
-localStorage.setItem("user", "admin");+
+localStorage.setItem("user", "admin");
 
-
+document.addEventListener("DOMContentLoaded", function () {
+    loadProducts();
+    loadAuth();
+});
 
 
 
